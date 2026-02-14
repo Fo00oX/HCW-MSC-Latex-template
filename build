@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+SRCDIR="thesis"
+MAIN="thesis-main.tex"
+OUTDIR="../out"
+PDF="thesis-main.pdf"
+
+mkdir -p out
+
+cd "$SRCDIR"
+
+latexmk -pdf -g -cd -outdir="$OUTDIR" -interaction=nonstopmode -halt-on-error "$MAIN"
+
+cd ..
+
+cp "out/$PDF" "$PDF"
+
+echo
+echo "Built:"
+echo "  Root PDF : ./$PDF"
+echo "  Aux files: ./out/"

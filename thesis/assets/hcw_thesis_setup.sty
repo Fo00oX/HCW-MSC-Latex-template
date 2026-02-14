@@ -1,0 +1,133 @@
+% hcw_thesis_setup.sty — Master thesis setup (English)
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{hcw_bachelor_setup}[2025/10/09 Bachelor thesis setup]
+
+% ---- Engine & language ----
+\RequirePackage{iftex}
+\ifPDFTeX
+  \RequirePackage[T1]{fontenc}
+  \RequirePackage[utf8]{inputenc}
+  \RequirePackage[english]{babel}
+\else
+  \RequirePackage{fontspec}
+  \RequirePackage[english]{babel}
+  \setmainfont{Arial}[
+  Path=fonts/,
+  Extension=.ttf,
+  UprightFont = *,
+  ItalicFont = * Italic ,
+  BoldFont = * Bold,
+  BoldItalicFont = * Bold Italic
+  ]
+%  \setmonofont{Courier New}
+\fi
+
+% ---- Layout ----
+\RequirePackage[a4paper, top=0cm, bottom=3cm, left=2.5cm, right=2.5cm, headsep=12mm]{geometry}
+\setlength{\headheight}{15pt}
+\usepackage{graphicx,eso-pic}
+% one-page background helper
+\newcommand{\TitleBackground}[1]{%
+  \AddToShipoutPictureBG*{%
+    \AtPageLowerLeft{%
+      \includegraphics[width=\paperwidth,height=\paperheight,keepaspectratio]{#1}%
+    }%
+  }%
+}
+
+% ---- Spacing & paragraphs ----
+\RequirePackage{setspace}
+\onehalfspacing
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt}
+
+% ---- Headers/Footers ----
+\RequirePackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{\leftmark}
+\rhead{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+% ---- Figures, tables, lists ----
+\RequirePackage{graphicx}
+\RequirePackage{caption}
+\RequirePackage{subcaption}
+\RequirePackage{booktabs}
+\RequirePackage{longtable}
+\RequirePackage{tabularx}
+\RequirePackage{float}
+\RequirePackage{csquotes}
+
+% --- Number figures/tables continuously (no chapter number) ---
+\usepackage{chngcntr}
+\counterwithout{figure}{chapter}
+\counterwithout{table}{chapter}
+\renewcommand{\thefigure}{\arabic{figure}}
+\renewcommand{\thetable}{\arabic{table}}
+
+% --- Short German labels: "Abb. 1", "Tab. 1" ---
+\captionsetup[figure]{labelformat=simple, labelsep=space, name=Abb.}
+\captionsetup[table]{labelformat=simple, labelsep=space, name=Tab.}
+
+% (optional) Bold label (e.g., "Abb. 1: ...")
+\captionsetup{labelfont=bf}
+
+% ---- Hyperlinks ----
+\RequirePackage[hidelinks]{hyperref}
+
+% ---- Bibliography ----
+\RequirePackage[backend=biber,style=authoryear,maxbibnames=99,uniquename=false,uniquelist=false]{biblatex}
+
+% ---- Abbreviations helper (simple) ----
+% Use a two-column table in abkuerzungen.tex for now. For advanced glossaries, switch to glossaries package.
+
+% ---- User fields for title page ----
+\newcommand{\thesistype}{Master's Thesis} % adjust if needed
+\newcommand{\thesistitleEN}{English Title}
+\newcommand{\thesissubtitleEN}{Subtitle (optional)}
+\newcommand{\thesistitleDE}{Titel (German)}
+\newcommand{\thesissubtitleDE}{Subtitel (German)[optional]}
+\newcommand{\authorname}{Firstname Lastname}
+\newcommand{\studyprogram}{studyprogram}
+\newcommand{\supervisor}{Firstname Lastname (supervisor 1)}
+\newcommand{\secondreader}{Firstname Lastname (supervisor 2)}
+\newcommand{\university}{Hochschule Campus Wien}
+\newcommand{\faculty}{Computer Science \& Digital Communications}
+
+
+% ---- Title page macro ----
+\newcommand{\HCWTitlePage}{%
+\begin{titlepage}
+    \newgeometry{top=0cm, bottom=0cm, left=2.5cm, right=2.5cm, headsep=0pt, footskip=0pt}
+    \thispagestyle{empty}
+    \TitleBackground{figures/background.jpg}
+    
+\vspace*{4.5cm}
+\hspace*{1.5cm}
+\begin{minipage}{0.78\textwidth}
+    \raggedright
+    {\huge \textbf{\thesistype}  \par\vspace{1cm}}
+    {\huge \textbf{\thesistitleEN}\par}
+    {\Large \thesissubtitleEN \par\vspace{1cm}}
+    {\huge \textbf{\thesistitleDE}\par}
+    {\Large \thesissubtitleDE \par\vspace{1cm}}
+    \vspace*{6cm}
+    Submitted by\\
+    \textbf{\authorname \\}
+
+    To obtain the academic degree of\par
+    \textbf{Master of Xxxxx} \par
+    \vspace*{3cm}
+
+    \begin{tabular}{@{}l l@{}}
+        Vienna, 2025 \\
+        Study program: & \studyprogram \\
+        at: & \university \\
+        supervised by: & \supervisor \\
+        & \secondreader \\
+    \end{tabular}
+\end{minipage}
+  \vfill
+\end{titlepage}%
+}

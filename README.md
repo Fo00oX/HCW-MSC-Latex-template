@@ -15,18 +15,37 @@ This template supports the preparation of a Master’s thesis in accordance with
 ```
 SDE-MA-Latex/
 │
-├── thesis/                 # LaTeX source files
-│   ├── thesis-main.tex     # Main document entry point
-│   ├── parts/              # Front matter, chapters, appendix
-│   ├── hcw_thesis_setup.sty
-│   └── references.bib
+├── thesis/                         # LaTeX source directory
+│   ├── thesis-main.tex             # Main document entry point
+│   ├── hcw_thesis_setup.sty        # Formatting and layout definitions
+│   ├── references.bib              # Bibliography database
+│   │
+│   ├── frontmatter/                # Front matter
+│   │   ├── titlepage.tex
+│   │   ├── abstract_en.tex
+│   │   ├── abstract_de.tex
+│   │   ├── acknowledgements.tex
+│   │   ├── abbreviations.tex
+│   │   ├── toc.tex
+│   │   ├── list_of_figures.tex
+│   │   └── list_of_tables.tex
+│   │
+│   ├── chapters/                   # Main content chapters
+│   │   ├── 01_introduction.tex
+│   │   ├── 02_chapter1.tex
+│   │   ├── 03_chapter2.tex
+│   │   └── 99_overview_ai.tex
+│   │
+│   ├── backmatter/                 # Back matter
+│   │   ├── appendix.tex
+│   │   └── bibliography.tex
+│   │
+│   ├── figures/                    # Images and graphics
+│   └── tables/                     # Table data (if separated)
 │
-├── out/                    # Build artifacts (aux, log, bbl, etc.)
-│
-├── thesis-main.pdf         # Generated output (after build)
-│
-├── build                   # Build script
-├── clean                   # Clean script
+├── out/                            # Build artifacts (aux, log, bbl, etc.)
+├── thesis-main.pdf                 # Generated output (after build)
+├── build                           # Build script, run to build PDF
 └── README.md
 ```
 
@@ -68,16 +87,6 @@ This will:
 ## Clean
 
 To remove all generated files:
-
-```bash
-./clean
-```
-
-This removes:
-
-* All files in `out/`
-* The generated `thesis-main.pdf`
-
 ---
 
 ## Bibliography
@@ -87,4 +96,3 @@ The project uses `biblatex` with the `biber` backend. Bibliographic entries are 
 ```
 thesis/references.bib
 ```
-# HCW-MSC-Latex-template

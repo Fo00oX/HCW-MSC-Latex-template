@@ -1,0 +1,52 @@
+% main.tex — Master Thesis (modular, German)
+\documentclass[12pt, a4paper, oneside]{scrreprt}
+
+% Load shared setup
+\usepackage{assets/hcw_thesis_setup}
+
+% Bibliography database
+\addbibresource{references.bib}
+
+\begin{document}
+
+% -------- Title page --------
+    \input{parts/frontmatter/titlepage}
+
+% -------- Front matter (Roman numbering) --------
+    \pagenumbering{Roman}
+    \setcounter{page}{1}
+
+    \input{parts/frontmatter/acknowledgments}
+    \input{parts/frontmatter/abstract_de}
+    \input{parts/frontmatter/abstract}
+    \input{parts/frontmatter/abbrevations}
+
+% Inhaltsverzeichnis (auto-generated with correct page numbers)
+    \input{parts/frontmatter/table_of_contents}
+
+    \cleardoublepage
+    \pagenumbering{arabic}
+
+% start figure/table numbering fresh in main matter:
+    \setcounter{figure}{0}
+    \setcounter{table}{0}
+
+% -------- Main matter --------
+    \input{parts/frontmatter/introduction}
+    \input{parts/chapters/chapter1}
+    \input{parts/chapters/chapter2}
+
+% -------- Back matter --------
+    \cleardoublepage
+    \input{parts/backmatter/bibliography}
+    \cleardoublepage
+    \input{parts/chapters/overview_ai}
+
+% Optional: Abbildungsverzeichnis & Tabellenverzeichnis in front matter
+    \input{parts/frontmatter/list_of_figures}
+    \input{parts/frontmatter/list_of_tables}
+
+% -------- Appendix --------
+    \input{parts/backmatter/appendix}
+
+\end{document}
