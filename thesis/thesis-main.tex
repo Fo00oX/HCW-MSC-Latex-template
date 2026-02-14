@@ -10,19 +10,19 @@
 \begin{document}
 
 % -------- Title page --------
-    \input{frontmatter/titlepage}
+    \input{front/titlepage}
 
 % -------- Front matter (Roman numbering) --------
     \pagenumbering{Roman}
     \setcounter{page}{1}
 
-    \input{frontmatter/acknowledgments}
-    \input{frontmatter/abstract_de}
-    \input{frontmatter/abstract}
-    \input{frontmatter/abbrevations}
+    \input{front/acknowledgments}
+    \input{front/abstract_de}
+    \input{front/abstract}
+    \input{front/abbrevations}
 
 % Inhaltsverzeichnis (auto-generated with correct page numbers)
-    \input{frontmatter/table_of_contents}
+    \input{front/table_of_contents}
 
     \cleardoublepage
     \pagenumbering{arabic}
@@ -38,15 +38,15 @@
 
 % -------- Back matter --------
     \cleardoublepage
-    \input{backmatter/bibliography}
+    \input{back/bibliography}
     \cleardoublepage
     \input{chapters/99_overview_ai}
 
 % Optional: Abbildungsverzeichnis & Tabellenverzeichnis in front matter
-    \input{frontmatter/list_of_figures}
-    \input{frontmatter/list_of_tables}
+    \input{front/list_of_figures}
+    \input{front/list_of_tables}
 
 % -------- Appendix --------
-    \input{backmatter/appendix}
+    \input{back/appendix}
 
 \end{document}
