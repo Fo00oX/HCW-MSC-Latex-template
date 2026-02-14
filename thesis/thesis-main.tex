@@ -10,19 +10,19 @@
 \begin{document}
 
 % -------- Title page --------
-    \input{parts/frontmatter/titlepage}
+    \input{frontmatter/titlepage}
 
 % -------- Front matter (Roman numbering) --------
     \pagenumbering{Roman}
     \setcounter{page}{1}
 
-    \input{parts/frontmatter/acknowledgments}
-    \input{parts/frontmatter/abstract_de}
-    \input{parts/frontmatter/abstract}
-    \input{parts/frontmatter/abbrevations}
+    \input{frontmatter/acknowledgments}
+    \input{frontmatter/abstract_de}
+    \input{frontmatter/abstract}
+    \input{frontmatter/abbrevations}
 
 % Inhaltsverzeichnis (auto-generated with correct page numbers)
-    \input{parts/frontmatter/table_of_contents}
+    \input{frontmatter/table_of_contents}
 
     \cleardoublepage
     \pagenumbering{arabic}
@@ -32,21 +32,21 @@
     \setcounter{table}{0}
 
 % -------- Main matter --------
-    \input{parts/frontmatter/introduction}
-    \input{parts/chapters/chapter1}
-    \input{parts/chapters/chapter2}
+    \input{chapters/00_introduction}
+    \input{chapters/02_chapter2}
+    \input{chapters/01_chapter1}
 
 % -------- Back matter --------
     \cleardoublepage
-    \input{parts/backmatter/bibliography}
+    \input{backmatter/bibliography}
     \cleardoublepage
-    \input{parts/chapters/overview_ai}
+    \input{chapters/99_overview_ai}
 
 % Optional: Abbildungsverzeichnis & Tabellenverzeichnis in front matter
-    \input{parts/frontmatter/list_of_figures}
-    \input{parts/frontmatter/list_of_tables}
+    \input{frontmatter/list_of_figures}
+    \input{frontmatter/list_of_tables}
 
 % -------- Appendix --------
-    \input{parts/backmatter/appendix}
+    \input{backmatter/appendix}
 
 \end{document}
