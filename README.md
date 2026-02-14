@@ -1,28 +1,57 @@
 # SDE-MA-Latex
 
-Because Version control is cool
+LaTeX thesis template for the Master’s program
+**Software Design & Engineering (SDE)** at
+**Hochschule Campus Wien**
 
-LaTeX thesis template for the Master’s program **Software Design & Engineering (SDE)** at **Hochschule Campus Wien**.
+Because version control is cool.
 
 ---
-## Build
 
-From the repository root run:
+# Build (PDF)
+
+From the repository root:
 
 ```bash
-./build
+./build-pdf.sh
 ```
+Output:
 
-This will:
-
-* Compile the thesis using `latexmk`
-* Execute `biber` for bibliography processing
-* Store auxiliary files in `out/`
-* Generate `thesis-main.pdf` in the repository root
+```
+thesis-main.pdf
+```
 
 ---
 
-## Bibliography
+# Live HTML Preview (Browser)
+
+For instant browser preview with auto-reload:
+
+```bash
+./preview-pdf.sh
+```
+
+Then open:
+
+```
+http://localhost:3000
+```
+---
+
+# HTML Wrapper File
+
+For HTML builds, the following wrapper must exist:
+
+```
+thesis/preview-entry.tex
+```
+---
+
+# Bibliography
+
+Bibliography file
+
+(Processed automatically via `biber`.):
 
 ```
 thesis/references.bib
@@ -30,42 +59,45 @@ thesis/references.bib
 
 ---
 
-## Structure
+# Project Structure
 
 ```
 SDE-MA-Latex/
 │
-├── thesis/                         # LaTeX source directory
-│   ├── thesis-main.tex             # Main document entry point
-│   ├── references.bib              # Bibliography database
+├── thesis/                        # LaTeX source directory
+│   ├── thesis-main.tex            # Main PDF entry point
+│   ├── preview-entry.tex          # HTML preview wrapper
+│   ├── references.bib             # Bibliography database
 │   │
 │   ├── assets/
-│   │   └── hcw_thesis_setup.sty        # Formatting and layout definitions
+│   │   └── hcw_thesis_setup.sty   # Formatting and layout
 │   │
-│   ├── front/                # Front matter
+│   ├── frontmatter/
 │   │   ├── titlepage.tex
-│   │   ├── abstract_en.tex
+│   │   ├── abstract.tex
 │   │   ├── abstract_de.tex
-│   │   ├── acknowledgements.tex
+│   │   ├── acknowledgments.tex
 │   │   ├── abbreviations.tex
-│   │   ├── table-of_content.tex
+│   │   ├── table_of_contents.tex
 │   │   ├── list_of_figures.tex
 │   │   └── list_of_tables.tex
 │   │
-│   ├── chapters/                   # Main content chapters
-│   │   ├── 00_introduction.tex
-│   │   ├── 01_chapter1.tex
-│   │   ├── 02_chapter2.tex
-│   │   └── 99_overview_ai.tex
+│   ├── chapters/
+│   │   ├── introduction.tex
+│   │   ├── chapter1.tex
+│   │   ├── chapter2.tex
+│   │   └── overview_ai.tex
 │   │
-│   ├── back/                 # Back matter
+│   ├── backmatter/
 │   │   ├── appendix.tex
 │   │   └── bibliography.tex
 │   │
-│   └── figures/                    # Images and graphics
+│   └── figures/
 │
-├── out/                            # Build artifacts (aux, log, bbl, etc.)
-├── thesis-main.pdf                 # Generated output (after build)
-├── build                           # Build script, run to build PDF
+├── out/                           # Generated stuf
+│
+├── thesis-main.pdf                # Generated PDF (after build-pdf)
+├── build-pdf.sh                   # PDF build script
+├── preview-pdf.sh                 # Live HTML preview script
 └── README.md
 ```

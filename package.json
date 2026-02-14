@@ -1,0 +1,15 @@
+{
+  "name": "hcw-msc-latex-template",
+  "version": "1.0.0",
+  "description": "LaTeX thesis template for the Master’s program\r **Software Design & Engineering (SDE)** at\r **Hochschule Campus Wien**",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "pdfjs-dist": "^5.4.624"
+  }
+}

@@ -1,0 +1,46 @@
+html, body {
+    height: 100%;
+    margin: 0;
+    background: #2b2b2b;
+}
+
+#toolbar{
+    height: 44px;
+    padding: 8px 12px;
+    background: rgba(0,0,0,.35);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    font-family: system-ui, sans-serif;
+    color: #ffffff;
+}
+
+
+#toolbar button{
+    border: 0;
+    border-radius: 6px;
+    padding: 6px 10px;
+    cursor: pointer;
+}
+
+#viewer{
+    height: calc(100% - 44px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    padding: 16px;
+    box-sizing: border-box;
+}
+
+.page{
+    background: #fff;
+    box-shadow: 0 10px 30px rgba(0,0,0,.45);
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+.page canvas{
+    display: block;
+}
