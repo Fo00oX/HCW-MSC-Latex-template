@@ -65,7 +65,7 @@ SDE-MA-Latex-Template/
 │   ├── assets/
 │   │   └── hcw_thesis_setup.sty
 │   │
-│   ├── front/                     # Stuf before actual Thesis
+│   ├── front/                     # Stuff before actual Thesis
 │   │   ├── titlepage.tex
 │   │   ├── abstract.tex
 │   │   ├── abstract_de.tex
