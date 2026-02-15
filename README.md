@@ -1,10 +1,8 @@
-# SDE-MA-Latex
+# SDE-MA-Latex-Template
 
 LaTeX thesis template for the Master’s program
 **Software Design & Engineering (SDE)** at
 **Hochschule Campus Wien**
-
-Because version control is cool.
 
 ---
 
@@ -20,24 +18,20 @@ Output:
 ```
 thesis-main.pdf
 ```
-
 ---
-
-# Live HTML Preview (Browser)
+# Live HTML PDF Preview (Browser)
 
 For instant browser preview with auto-reload:
 
 ```bash
 ./preview-pdf.sh
 ```
-
 Then open:
 
 ```
 http://localhost:3000
 ```
 ---
-
 # HTML Wrapper File
 
 For HTML builds, the following wrapper must exist:
@@ -46,7 +40,6 @@ For HTML builds, the following wrapper must exist:
 thesis/preview-entry.tex
 ```
 ---
-
 # Bibliography
 
 Bibliography file
@@ -62,17 +55,17 @@ thesis/references.bib
 # Project Structure
 
 ```
-SDE-MA-Latex/
+SDE-MA-Latex-Template/
 │
-├── thesis/                        # LaTeX source directory
+├── thesis/
 │   ├── thesis-main.tex            # Main PDF entry point
 │   ├── preview-entry.tex          # HTML preview wrapper
 │   ├── references.bib             # Bibliography database
 │   │
 │   ├── assets/
-│   │   └── hcw_thesis_setup.sty   # Formatting and layout
+│   │   └── hcw_thesis_setup.sty
 │   │
-│   ├── frontmatter/
+│   ├── front/                     # Stuf before actual Thesis
 │   │   ├── titlepage.tex
 │   │   ├── abstract.tex
 │   │   ├── abstract_de.tex
@@ -82,13 +75,13 @@ SDE-MA-Latex/
 │   │   ├── list_of_figures.tex
 │   │   └── list_of_tables.tex
 │   │
-│   ├── chapters/
+│   ├── chapters/                  # Actual Thesis
 │   │   ├── introduction.tex
 │   │   ├── chapter1.tex
 │   │   ├── chapter2.tex
 │   │   └── overview_ai.tex
 │   │
-│   ├── backmatter/
+│   ├── back/                      # Stuff after actual Thesis
 │   │   ├── appendix.tex
 │   │   └── bibliography.tex
 │   │
