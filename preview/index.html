@@ -9,9 +9,20 @@
 <body>
 
 <div id="toolbar">
-    <button id="prev">Prev</button>
+
     <span id="pageLabel">Page 1 / 1</span>
+
+    <button id="prev">Prev</button>
     <button id="next">Next</button>
+
+    <label for="pageInput" style="margin-left: 12px;">Go to</label>
+    <input id="pageInput" type="number" min="1" step="1" inputmode="numeric" style="width: 80px;" />
+    <button id="go">Go</button>
+    <button id="reload" title="Reload PDF">
+        <span class="reload-label">Reload</span>
+        <span class="spinner" hidden></span>
+    </button>
+
 </div>
 
 <div id="viewer"></div>

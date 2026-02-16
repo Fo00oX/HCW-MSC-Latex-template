@@ -7,6 +7,12 @@ const viewer = document.getElementById("viewer");
 const pageLabel = document.getElementById("pageLabel");
 const btnPrev = document.getElementById("prev");
 const btnNext = document.getElementById("next");
+const btnReload = document.getElementById("reload");
+const reloadLabel = btnReload.querySelector(".reload-label");
+const spinner = btnReload.querySelector(".spinner");
+
+const pageInput = document.getElementById("pageInput");
+const btnGo = document.getElementById("go");
 
 let pdf = null;
 let pageNo = 1;
@@ -22,8 +28,10 @@ function clampPage(n){
     return Math.max(1, Math.min(numPages, n));
 }
 
-function pdfUrl(){
-    return `/thesis.pdf?v=${Date.now()}`;
+function pdfUrl(version, nonce){
+    const v = version ?? lastStamp ?? Date.now();
+    const n = nonce ? `&n=${Date.now()}` : "";
+    return `/thesis.pdf?v=${encodeURIComponent(v)}${n}`;
 }
 
 function getWrap(){
@@ -38,11 +46,16 @@ function getWrap(){
 
 function updateLabel(){
     pageLabel.textContent = `Page ${pageNo} / ${numPages}`;
+    if (pageInput) {
+        pageInput.min = "1";
+        pageInput.max = String(numPages);
+        pageInput.value = String(pageNo);
+    }
 }
 
-async function loadPdf(){
+async function loadPdf(version){
     const task = pdfjsLib.getDocument({
-        url: pdfUrl(),
+        url: pdfUrl(version),
         disableStream: true,
         disableAutoFetch: true
     });
@@ -51,7 +64,9 @@ async function loadPdf(){
     numPages = pdf.numPages;
     pageNo = clampPage(pageNo);
     updateLabel();
+
     await renderPage();
+    await nextPaint(2);
 }
 
 async function renderPage(){
@@ -84,9 +99,104 @@ btnNext.addEventListener("click", async () => {
     await renderPage();
 });
 
+function nextPaint(frames = 2) {
+    return new Promise((resolve) => {
+        const step = () => {
+            if (frames-- <= 0) return resolve();
+            requestAnimationFrame(step);
+        };
+        requestAnimationFrame(step);
+    });
+}
+
+btnReload.addEventListener("click", async () => {
+    try {
+        btnReload.disabled = true;
+        spinner.hidden = false;
+        reloadLabel.textContent = "Loading...";
+
+        const before = lastStamp ?? await fetchStamp();
+
+        const nextStamp = await waitForNextStableStamp(before);
+
+        if (nextStamp) lastStamp = nextStamp;
+
+        await loadPdf(nextStamp);
+
+    } catch (e) {
+        console.error(e);
+    } finally {
+        spinner.hidden = true;
+        reloadLabel.textContent = "Reload";
+        btnReload.disabled = false;
+    }
+});
+
+
+const STAMP_POLL_MS = 250;
+const STAMP_WAIT_TIMEOUT = 30000;
+
+async function fetchStamp() {
+    const r = await fetch(`/stamp.txt?v=${Date.now()}`, { cache: "no-store" });
+    if (!r.ok) return null;
+    return (await r.text()).trim() || null;
+}
+
+async function waitForNextStableStamp(prevStamp) {
+    const start = Date.now();
+    let lastSeen = prevStamp;
+    let lastChangeAt = Date.now();
+
+    while (Date.now() - start < STAMP_WAIT_TIMEOUT) {
+        const s = await fetchStamp();
+        if (s && s !== lastSeen) {
+            lastSeen = s;
+            lastChangeAt = Date.now();
+        }
+
+        if (lastSeen && Date.now() - lastChangeAt >= STABLE_MS) {
+            if (!prevStamp || lastSeen !== prevStamp) return lastSeen;
+        }
+
+        await new Promise(res => setTimeout(res, STAMP_POLL_MS));
+    }
+
+    return lastSeen;
+}
+
+
+async function goToPageFromInput(){
+    if (!pdf) return;
+    const raw = pageInput?.value ?? "";
+    const n = clampPage(parseInt(raw, 10) || 1);
+    pageNo = n;
+    await renderPage();
+}
+
+btnGo?.addEventListener("click", () => {
+    goToPageFromInput().catch(console.error);
+});
+
+pageInput?.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") {
+        e.preventDefault();
+        btnGo?.click();
+    }
+    if (e.key === "Escape") {
+        e.preventDefault();
+        pageInput.value = String(pageNo);
+        pageInput.blur();
+    }
+});
+
 window.addEventListener("keydown", (e) => {
     if (e.key === "PageDown" || e.key === "ArrowRight") btnNext.click();
     if (e.key === "PageUp" || e.key === "ArrowLeft") btnPrev.click();
+
+    if ((e.ctrlKey || e.metaKey) && (e.key === "r" || e.key === "R")) {
+        e.preventDefault();
+        btnReload.click();
+    }
 });
 
 function schedule(stamp){
