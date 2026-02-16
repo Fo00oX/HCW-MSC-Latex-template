@@ -1,11 +1,8 @@
 # SDE-MA-Latex-Template
-
 LaTeX thesis template for the Master’s program
 **Software Design & Engineering (SDE)** at
 **Hochschule Campus Wien**
-
 ---
-
 # Build (PDF)
 
 From the repository root:
@@ -31,14 +28,7 @@ Then open:
 ```
 http://localhost:3000
 ```
----
-# HTML Wrapper File
 
-For HTML builds, the following wrapper must exist:
-
-```
-thesis/preview-entry.tex
-```
 ---
 # Bibliography
 
@@ -59,7 +49,6 @@ SDE-MA-Latex-Template/
 │
 ├── thesis/
 │   ├── thesis-main.tex            # Main PDF entry point
-│   ├── preview-entry.tex          # HTML preview wrapper
 │   ├── references.bib             # Bibliography database
 │   │
 │   ├── assets/
@@ -84,6 +73,8 @@ SDE-MA-Latex-Template/
 │   ├── back/                      # Stuff after actual Thesis
 │   │   ├── appendix.tex
 │   │   └── bibliography.tex
+│   │
+│   ├── preview/                   # Stuff for Live PDF prevew
 │   │
 │   └── figures/
 │

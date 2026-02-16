@@ -8,22 +8,22 @@ OUTDIR="$OUT/latex"
 
 mkdir -p "$OUT" "$OUTDIR"
 
-copy_viewer_app() {
+copy_app() {
   cp -f preview/index.html "$OUT/index.html"
   cp -f preview/page.css   "$OUT/page.css"
   cp -f preview/viewer.js  "$OUT/viewer.js"
 }
 
-build_pdf_fast() {
+build_pdf() {
   ( cd "$THESIS_DIR" && latexmk -pdf -bibtex- -interaction=nonstopmode -halt-on-error -outdir="../$OUTDIR" "$MAIN" )
   cp -f "$OUTDIR/${MAIN%.tex}.pdf" "$OUT/thesis.pdf"
   date +%s%3N > "$OUT/stamp.txt"
 }
 
-copy_viewer_app
-build_pdf_fast || true
+copy_app
+build_pdf || true
 
-echo "Live preview: http://127.0.0.1:3000 (Ctrl+C to stop)"
+echo "[INFO] Starting live preview..."
 
 ( cd "$OUT" && npx -y vite . --host 127.0.0.1 --port 3000 --strictPort ) &
 VITE_PID=$!
@@ -39,7 +39,7 @@ while true; do
   if [[ -n "$newest" && "$newest" != "$last" ]]; then
     last="$newest"
     sleep 0.4
-    build_pdf_fast >/dev/null 2>&1 || true
+    build_pdf >/dev/null 2>&1 || true
   fi
   sleep 0.2
 done
