@@ -2,7 +2,7 @@
 set -euo pipefail
 
 OUT="out/preview"
-MAIN="preview/preview-entry.tex"
+MAIN="preview-entry.tex"
 THESIS_DIR="thesis"
 OUTDIR="$OUT/latex"
 
@@ -15,12 +15,8 @@ copy_app() {
 }
 
 build_pdf() {
-  local main_src="../$MAIN"
-  local base="$(basename "$MAIN" .tex)"
-  local pdf_src="$OUTDIR/$base.pdf"
-
-  ( cd "$THESIS_DIR" && latexmk -pdf -bibtex- -interaction=nonstopmode -halt-on-error -outdir="../$OUTDIR" "$main_src" )
-  cp -f "$pdf_src" "$OUT/thesis.pdf"
+  ( cd "$THESIS_DIR" && latexmk -pdf -bibtex- -interaction=nonstopmode -halt-on-error -outdir="../$OUTDIR" "$MAIN" )
+  cp -f "$OUTDIR/${MAIN%.tex}.pdf" "$OUT/thesis.pdf"
   date +%s%3N > "$OUT/stamp.txt"
 }
 
