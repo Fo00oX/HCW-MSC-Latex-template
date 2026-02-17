@@ -22,7 +22,7 @@ let lastStamp = null;
 let stableTimer = null;
 
 const STABLE_MS = 700;
-const POLL_MS = 700;
+const POLL_MS = 5000;
 
 function clampPage(n){
     return Math.max(1, Math.min(numPages, n));
@@ -133,8 +133,8 @@ btnReload.addEventListener("click", async () => {
 });
 
 
-const STAMP_POLL_MS = 250;
-const STAMP_WAIT_TIMEOUT = 30000;
+const STAMP_POLL_MS = 5000;
+const STAMP_WAIT_TIMEOUT = 10000;
 
 async function fetchStamp() {
     const r = await fetch(`/stamp.txt?v=${Date.now()}`, { cache: "no-store" });
@@ -144,26 +144,26 @@ async function fetchStamp() {
 
 async function waitForNextStableStamp(prevStamp) {
     const start = Date.now();
-    let lastSeen = prevStamp;
-    let lastChangeAt = Date.now();
 
     while (Date.now() - start < STAMP_WAIT_TIMEOUT) {
-        const s = await fetchStamp();
-        if (s && s !== lastSeen) {
-            lastSeen = s;
-            lastChangeAt = Date.now();
-        }
-
-        if (lastSeen && Date.now() - lastChangeAt >= STABLE_MS) {
-            if (!prevStamp || lastSeen !== prevStamp) return lastSeen;
-        }
 
         await new Promise(res => setTimeout(res, STAMP_POLL_MS));
+
+        const s = await fetchStamp();
+        if (!s) continue;
+
+        if (s !== prevStamp) {
+            await new Promise(res => setTimeout(res, STABLE_MS));
+
+            const confirm = await fetchStamp();
+            if (confirm === s) {
+                return s;
+            }
+        }
     }
 
-    return lastSeen;
+    return prevStamp;
 }
-
 
 async function goToPageFromInput(){
     if (!pdf) return;
