@@ -20,6 +20,16 @@ build_pdf() {
   date +%s%3N > "$OUT/stamp.txt"
 }
 
+cleanup() {
+  echo
+  echo "[INFO] Shutting down preview..."
+  kill "${VITE_PID:-}" 2>/dev/null || true
+  rm -rf "$OUT" 2>/dev/null || true
+  echo "[INFO] Cleaned up $OUT"
+}
+
+trap cleanup INT TERM EXIT
+
 copy_app
 build_pdf || true
 
@@ -27,8 +37,6 @@ echo "[INFO] Starting live preview..."
 
 ( cd "$OUT" && npx -y vite . --host 127.0.0.1 --port 3000 --strictPort ) &
 VITE_PID=$!
-
-trap 'kill "$VITE_PID" 2>/dev/null || true; exit 0' INT TERM
 
 last=""
 while true; do

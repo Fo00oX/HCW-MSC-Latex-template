@@ -21,6 +21,16 @@ cd ..
 cp "$OUTDIR/$PDF" "$PDF"
 
 echo
-echo "Built successfully:"
-echo "  PDF        : ./$PDF"
-echo "  Aux files  : ./$OUTDIR/"
+echo "[INFO] Built successfully:"
+echo "  [INFO] PDF        : ./$PDF"
+echo
+echo "[INFO] Clean up Aux files in: ./$OUTDIR/"
+
+cleanup() {
+  echo
+  echo "[INFO] Shutting down out..."
+  rm -rf "$OUTDIR" 2>/dev/null || true
+  echo "[INFO] Cleaned up $OUTDIR"
+}
+
+trap cleanup INT TERM EXIT
